@@ -7,14 +7,13 @@
 var mongoose = require('mongoose');
 
 // create a schema
-var userSchema = new mongoose.Schema({
-    first_name: String, // First name of the user.
-    last_name: String,  // Last name of the user.
+var articleSchema = new mongoose.Schema({
+    content: String, 
 });
 
 // the schema is useless so far
 // we need to create a model using it
-var User = mongoose.model('User', userSchema);
+var Article = mongoose.model('Article', articleSchema);
 
 // make this available to our users in our Node applications
-module.exports = User;
+module.exports = Article;
