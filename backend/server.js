@@ -4,14 +4,16 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const PORT = 4000;
-// const routes = express.Router();
 var User = require('./schema/user.js');
 var Content = require('./schema/comment.js');
 var Article = require('./schema/article.js');
+var session = require('express-session');
+
+//change secret in production
+app.use(session({secret: 'secretKey', resave: false, saveUninitialized: false}));
 
 app.use(cors());
 app.use(bodyParser.json());
-// app.use('/practiceRoutes', routes);
 mongoose.connect('mongodb://127.0.0.1:27017/practice', { useNewUrlParser: true });
 const connection = mongoose.connection;
 connection.once('open', function() {
@@ -33,8 +35,39 @@ app.get('/getAllContent', function(req, res) {
     });
 });
 
+app.post('/validateUser', function(req, res) {
+    const email = req.body.email;
+    const pw = req.body.pw;
+    if (email === 'email' && pw === 'pw'){ //change later, lol
+        res.status(200).send('editor'); //maybe separate response for non-editor user
+    } else {
+        res.status(400).send('No such account.');
+    }
+});
+
+app.post('/getArticleData', function(req, res) {
+    Article.findOne({_id: req.body.article_id}, function(error, article){
+        if(error){
+            console.log(error);
+            res.status(400).send(JSON.stringify(error));
+            return;
+        }
+        if (!article){
+            console.log("Internal error.");
+            res.status(500).send("Internal error.");
+            return;
+        }
+        console.log(article.content + "from tester")
+        res.status(200).send(article.content);
+    });
+});
+
 app.post('/saveArticleData', function(req, res) {
-    console.log(req.body);
+    var updated = new Article({_id: req.body.article_id, content: req.body.content});
+    Article.findOneAndUpdate({_id: req.body.article_id}, updated, {upsert:true}, function(err, doc){
+        if (err) return res.send(500, { error: err });
+        return res.send("succesfully saved");
+    });
 });
 
 app.get('/addNew', function(req, res) {

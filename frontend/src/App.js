@@ -1,46 +1,45 @@
-import React, {useState} from 'react';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import React, { useState } from 'react';
+import SignIn from './components/SignInPage';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import EditorView from './components/EditorView';
+import SignUp from './components/SignUpPage';
 import axios from 'axios';
 
 function App() {
-  const [articleData, setArticleData] = useState('<p>default</p>');
 
-  function saveArticleData(){
-    axios.post('http://localhost:4000/saveArticleData', {content: articleData})
-    .then(response => response.data)
-    .then(data => console.log(data));
-  }
+    const [currentRoute, setCurrentRoute] = useState('/signIn');
+    const [userEmail, setUserEmail] = useState('');
+    const [userPassword, setUserPassword] = useState('');
 
-  return (
-    
-    <div>
-      <div>
-                <CKEditor
-                    editor={ ClassicEditor }
-                    data={articleData}
-                    onInit={ editor => {
-                        // You can store the "editor" and use when it is needed.
-                        console.log( 'Editor is ready to use!', editor );
-                    } }
-                    onChange={ ( event, editor ) => {
-                        const data = editor.getData();
-                        // console.log( { event, editor, data } );
-                        setArticleData(data);
-                        console.log(articleData);
+    function validateUser() {
+        console.log(userEmail + " " + userPassword);
+        axios.post('http://localhost:4000/validateUser', {email:userEmail, pw: userPassword})
+        .then(response => response.data)
+        .then(data => {
+            if (data === 'editor'){
+                setCurrentRoute('/editor');
+            }
+        });
+    }
 
-                    } }
-                    onBlur={ ( event, editor ) => {
-                        console.log( 'Blur.', editor );
-                    } }
-                    onFocus={ ( event, editor ) => {
-                        console.log( 'Focus.', editor );
-                    } }
+    return (
+
+        <div>
+            <Router>
+                <Route path="/signIn" render={
+                    () => <SignIn
+                        setRoute={setCurrentRoute}
+                        setUserEmail={setUserEmail}
+                        setUserPassword={setUserPassword}
+                        validateUser={validateUser}
+                    />}
                 />
-                <button onClick={saveArticleData}>Save Data</button>
-            </div>
-    </div>
-  );
+                <Route path="/editor" render={() => <EditorView />} />
+                <Route path="/signUp" render={() => <SignUp />} />
+                <Redirect to={currentRoute} />
+            </Router>
+        </div>
+    );
 }
 
 export default App;

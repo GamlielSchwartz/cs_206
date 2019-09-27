@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 // create a schema
 var articleSchema = new mongoose.Schema({
     content: String, 
+    _id: String,
 });
 
 // the schema is useless so far
