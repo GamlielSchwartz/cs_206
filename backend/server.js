@@ -39,7 +39,7 @@ app.post('/validateUser', function(req, res) {
     const email = req.body.email;
     const pw = req.body.pw;
     if (email === 'email' && pw === 'pw'){ //change later, lol
-        res.status(200).send('editor'); //maybe separate response for non-editor user
+        res.status(200).send('valid'); //maybe separate response for non-editor user
     } else {
         res.status(400).send('No such account.');
     }

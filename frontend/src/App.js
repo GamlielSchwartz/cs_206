@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SignIn from './components/SignInPage';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import EditorView from './components/EditorView';
+import Home from './components/Home';
 import SignUp from './components/SignUpPage';
 import axios from 'axios';
 
@@ -16,8 +16,8 @@ function App() {
         axios.post('http://localhost:4000/validateUser', {email:userEmail, pw: userPassword})
         .then(response => response.data)
         .then(data => {
-            if (data === 'editor'){
-                setCurrentRoute('/editor');
+            if (data === 'valid'){
+                setCurrentRoute('/home');
             }
         });
     }
@@ -34,7 +34,7 @@ function App() {
                         validateUser={validateUser}
                     />}
                 />
-                <Route path="/editor" render={() => <EditorView />} />
+                <Route path="/home" render={() => <Home />} />
                 <Route path="/signUp" render={() => <SignUp />} />
                 <Redirect to={currentRoute} />
             </Router>
