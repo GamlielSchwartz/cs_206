@@ -7,15 +7,40 @@ import Feed from './Feed';
 
 
 function Home() {
+    const [selectedAuthors, setSelectedAuthors] = useState([]);
+    const [selectedSubjects, setSelectedSubjects] = useState([]);
+
+    function updateAuthors(newAuthors){
+        console.log(newAuthors);
+        setSelectedAuthors(newAuthors);
+    }
+
+    function updateSubjects(newSubjects){
+        console.log(newSubjects);
+        setSelectedSubjects(newSubjects);
+    }
+
+    //TODO: replace dummy with real data
+    const subjectArray = ["Subject 0", "Subject 1", "Subject 2"];
+    const authorsArray = ["George Bush", "Barack Obama", "Donald Trump"];
+
     return (
         <Grid container spacing={3}>
 
             <Grid item xs={3}>
-                <FilterByAuthor />
+                <FilterByAuthor
+                    setSelectedAuthors={updateAuthors}
+                    selectedAuthors={selectedAuthors}
+                    authorsArray={authorsArray}
+                />
             </Grid>
 
             <Grid item xs={3}>
-                <FilterBySubject />
+                <FilterBySubject
+                    setSelectedSubjects={updateSubjects}
+                    selectedSubjects={selectedSubjects}
+                    subjectArray={subjectArray}
+                />
             </Grid>
 
             <Grid item xs={6}>
