@@ -7,7 +7,7 @@ import axios from 'axios';
 
 function App() {
 
-    const [currentRoute, setCurrentRoute] = useState('/signIn');
+    const [currentRoute, setCurrentRoute] = useState('/home');
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
 
