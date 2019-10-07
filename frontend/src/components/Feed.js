@@ -1,9 +1,12 @@
 import React from 'react';
+import { List, ListItemText, Paper } from '@material-ui/core';
+import TwitterFeed from './TwitterFeed';
 
 export default function Feed() {
-  return (
-    <div>
-        This is where the feed will go
-    </div>
-  );
+    return (
+        <Paper style={{ maxHeight: window.innerHeight * .9, overflow: 'auto' }}>
+            
+                <TwitterFeed/>
+        </Paper>
+    );
 }

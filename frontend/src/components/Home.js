@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import '../EditorView.css';
 import FilterByAuthor from './FilterByAuthor';
 import FilterBySubject from './FilterBySubject';
 import Grid from '@material-ui/core/Grid';
-import Feed from './Feed';
+import TwitterFeed from './TwitterFeed';
 
 
 function Home() {
@@ -44,7 +43,7 @@ function Home() {
             </Grid>
 
             <Grid item xs={6}>
-                <Feed />
+                <TwitterFeed/>
             </Grid>
 
         </Grid>

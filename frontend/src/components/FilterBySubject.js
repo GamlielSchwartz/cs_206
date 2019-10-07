@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { ListSubheader } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,14 +17,22 @@ export default function SelectedListItem(props) {
     const classes = useStyles();
     const selectedSubjects = props.selectedSubjects;
     const setSelectedSubjects = props.setSelectedSubjects;
-    
+
     function handleListItemClick(subject) {
         setSelectedSubjects(subject);
     }
 
     return (
         <div className={classes.root}>
-            <List component="nav" aria-label="secondary mailbox folder">
+            <List 
+            component="nav" 
+            aria-label="secondary mailbox folder"
+            subheader={
+                <ListSubheader component="div" id="nested-list-subheader">
+                    Choose a Subject:
+            </ListSubheader>
+            }
+            >
                 {props.subjectArray.map((item, index) => {
                     return (
                         <ListItem 

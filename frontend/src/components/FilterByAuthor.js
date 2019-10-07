@@ -8,6 +8,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
 import './filterByAuthor.css';
+import { ListSubheader } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -35,7 +36,15 @@ export default function FilterByAuthor(props) {
     };
 
     return (
-        <List dense className={classes.root}>
+        <List
+            dense
+            className={classes.root}
+            subheader={
+                <ListSubheader component="div" id="nested-list-subheader">
+                    Choose Tweet Authors:
+            </ListSubheader>
+            }
+        >
             {props.authorsArray.map((value, index) => {
                 const labelId = `checkbox-list-secondary-label-${index}`;
                 return (
@@ -47,7 +56,7 @@ export default function FilterByAuthor(props) {
                             />
                             </ListItemAvatar> */}
                         <ListItemText id={labelId} primary={value} />
-                        <ListItemSecondaryAction>
+                        <ListItemSecondaryAction >
                             <Checkbox
                                 edge="end"
                                 onChange={handleToggle(value)}
