@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import { Paper } from '@material-ui/core';
+import { Paper, Button, ListSubheader } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
     },
+    button: {
+        margin: theme.spacing(1),
+      },
 }));
 
 export default function TwitterFeed() {
@@ -107,13 +110,19 @@ export default function TwitterFeed() {
         ]
     return (
         <Paper style={{ maxHeight: window.innerHeight * .9, overflow: 'auto' }}>
-            <List className={classes.root}>
+            <List 
+            className={classes.root}
+            subheader={
+                <ListSubheader component="div" id="nested-list-subheader">
+                    Twitter Feed:
+            </ListSubheader>}
+            >
                 {tweets.map((item, index) => {
                     return (
                         <div key={index}>
                             <ListItem alignItems="center">
                                 <ListItemAvatar>
-                                    <Avatar alt={item.alt} src={item.src} />
+                                    <Avatar alt={item.alt} src={"https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50.jpg"} />
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={item.header}
@@ -137,6 +146,13 @@ export default function TwitterFeed() {
                         </div>
                     )
                 })}
+                <Button
+                    color="primary"
+                    variant="contained"
+                    className={classes.button}
+                >
+                    Get more tweets
+                </Button>
             </List>
         </Paper>
     );
