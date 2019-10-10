@@ -9,19 +9,19 @@ function Home() {
     const [selectedAuthors, setSelectedAuthors] = useState([]);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
 
-    function updateAuthors(newAuthors){
+    function updateAuthors(newAuthors) {
         console.log(newAuthors);
         setSelectedAuthors(newAuthors);
     }
 
-    function updateSubjects(newSubjects){
+    function updateSubjects(newSubjects) {
         console.log(newSubjects);
         setSelectedSubjects(newSubjects);
     }
 
     //TODO: replace dummy with real data
-    const subjectArray = ["Subject 0", "Subject 1", "Subject 2"];
-    const authorsArray = ["George Bush", "Barack Obama", "Donald Trump"];
+    const subjectArray = ["Guns", "Environment", "Sexual Harassment"];
+    const authorsArray = ["Anyone", "Barack Obama", "Donald Trump"];
 
     return (
         <Grid container spacing={3}>
@@ -43,7 +43,9 @@ function Home() {
             </Grid>
 
             <Grid item xs={6}>
-                <TwitterFeed/>
+                <TwitterFeed
+                    authorsArray={selectedAuthors}
+                    subject={selectedSubjects} />
             </Grid>
 
         </Grid>

@@ -8,7 +8,10 @@ var User = require('./schema/user.js');
 var Content = require('./schema/comment.js');
 var Article = require('./schema/article.js');
 var session = require('express-session');
-
+var Twitter = require('twitter');
+var twitterBaseApi = 'https://api.twitter.com/1.1/search/tweets.json'; 
+var w2v = require( 'word2vec' );
+var fs = require('fs');
 //change secret in production
 app.use(session({secret: 'secretKey', resave: false, saveUninitialized: false}));
 
@@ -24,6 +27,42 @@ app.listen(PORT, function() {
 });
 
 var currTicket = 0;
+
+// fs.open('combined.csv', 'r', function (err, file) {
+//   if (err) throw err;
+//   console.log('got here in file read!');
+
+// });
+
+//   w2v.word2vec( '/Users/gamliel/Desktop/CS206/backend/combined.txt', '/Users/gamliel/Desktop/CS206/backend/vectors.txt', {silent: false}, function( error, model ) {
+//     console.log("got here")
+//     console.log( model );
+// });
+
+var client = new Twitter({
+  consumer_key: 'GaEOxBTG3e2DkHnksn3ec8gex',
+  consumer_secret: '6CUBhVNmW425oYYLefQQGvvTYdouuLG6zefSzzghoYNFyprssP',
+  access_token_key: '1180972265363496961-AGLVkB0qtI7dumQEMMbcZ0YphMTy70',
+  access_token_secret: 'xw4iOBp2c9w4cIQeWiXDJn4JOrP1Sy5ciDSNRFKjU5AYR'
+});
+
+app.post('/getTweets', function(req, res) {
+    // var params = {screen_name: 'nodejs'};
+    // client.get('statuses/user_timeline', params, function(error, tweets, response) {
+    //   if (!error) {
+    //     console.log(tweets);
+    //     res.status(200).send(tweets);
+    //   }
+    // });
+    console.log(req.body.criteria)
+    //filter by authors: from:POTUS OR from:ClaraJeffery
+    client.get('search/tweets', {q: `${req.body.criteria} -filter:retweets`, tweet_mode: 'extended', count: 100, result_type: 'mixed', language: 'en'}, function(error, tweets, response) {
+    res.status(200).send(tweets);
+    console.log(tweets);
+});
+});
+
+
 
 app.get('/getAllContent', function(req, res) {
     Content.find(function(err, data) {
