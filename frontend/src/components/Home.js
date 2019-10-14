@@ -20,8 +20,8 @@ function Home() {
     }
 
     //TODO: replace dummy with real data
-    const subjectArray = ["Guns", "Environment", "Sexual Harassment"];
-    const authorsArray = ["Anyone", "Barack Obama", "Donald Trump"];
+    const subjectArray = ["Guns", "Environment", "Sexual Harassment", "Healthcare", "Student Debt", "2020 Election", "Police Brutality", "LGBTQ+", "Gender Equality", "Brexit"];
+    const authorsArray = ["Anyone", "Barack Obama", "Donald Trump", "Alexandria Ocasio-Cortez", "Ted Cruz", "Nancy Pelosi", "Adam Schiff", "John Lewis", "Anderson Cooper", "John Oliver", "Ben Shapiro"];
 
     return (
         <Grid container spacing={3}>

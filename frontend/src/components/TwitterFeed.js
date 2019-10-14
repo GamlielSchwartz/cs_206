@@ -22,17 +22,127 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const twitterHandles = new Map([['Barack Obama', 'barackobama'], ['Donald Trump', 'realdonaldtrump'], ['Alexandria Ocasio-Cortez', 'aoc'], ['Ted Cruz', 'tedcruz'], ['Nancy Pelosi', 'speakerpelosi'], ['Adam Schiff', 'repadamschiff'], ['John Lewis', 'repjohnlewis'], ['Anderson Cooper', 'andersoncooper'], ['John Oliver', 'iamjohnoliver'], ['Ben Shapiro', 'benshapiro']]);
+
 export default function TwitterFeed(props) {
     console.log(props)
 
     function getCriteria(){
+        //check which influencers selected
+        // set string equal to twitter handle
+        // return from:handle AND query params
+
+        var authorHandle = selectAuthor(props);
+        var authorName = props.authorsArray;
         if (props.subject === 'Guns'){
-            return `guns OR "second amendment" OR shootings`
+            return '(from:' + twitterHandles.get(authorName) + ')' //'(guns OR 'second amendment' OR shootings)'
         } else if (props.subject === 'Environment'){
-            return `Environment protect activism`
+            return authorHandle + ` (#climate OR Environment OR climate change OR pollution)`
         } else if (props.subject === 'Sexual Harassment'){
-            return "sexual harassment OR rape"
+            return authorHandle + " sexual harassment OR rape"
+        } else if (props.subject === 'Healthcare'){
+            return authorHandle + ' healthcare OR hospital OR medical treatments'
+        } else if (props.subject === 'Student Debt'){
+            return authorHandle + ' #studentloan OR student debt'
+        } else if (props.subject === '2020 Election'){
+            return authorHandle + ' #election2020 OR MAGA OR #Yang2020 OR Vote OR KeepItBlue OR #Bernie2020 OR #Warren2020 OR #Pete2020'
+        } else if (props.subject === 'Police Brutality'){
+            return authorHandle + ' #blacklivesmatter OR #bluelivesmatter OR Ferguson'
+        } else if (props.subject === 'LGBTQ+') {
+            return authorHandle + ' #lgbt OR #pride OR #transgender'
+        } else if (props.subject === 'Gender Equality') {
+            return authorHandle + ' #feminism OR #gender OR #genderequality'
+        } else if (props.subject === 'Brexit') {
+            return authorHandle + ' #brexit'
         }
+    }
+
+    function selectAuthor(props) {
+
+    //if string is empty, add handle
+    //if stirng is not empty, concatenate with OR from:handle
+        var handle_String = '';
+        if (props.authorsArray === 'Barack Obama') {
+            if (handle_String == '') {
+                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+            } else {
+                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+            }
+        }
+        
+        if (props.authorsArray === 'Donald Trump') {
+            if (handle_String == '') {
+                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+            } else {
+                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+            }
+        }
+
+        if (props.authorsArray === "Alexandria Ocasio-Cortez") {
+            if (handle_String == '') {
+                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+            } else {
+                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+            }
+        }
+
+        if (props.authorsArray === "Ted Cruz") {
+            if (handle_String == '') {
+                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+            } else {
+                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+            }
+        }
+
+        if (props.authorsArray === "Nancy Pelosi") {
+            if (handle_String == '') {
+                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+            } else {
+                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+            }
+        }
+       
+        if (props.authorsArray === "Adam Schiff") {
+            if (handle_String == '') {
+                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+            } else {
+                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+            }
+        }
+
+        if (props.authorsArray === "John Lewis") {
+            if (handle_String == '') {
+                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+            } else {
+                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+            }
+        }
+
+        if (props.authorsArray === "Anderson Cooper") {
+            if (handle_String == '') {
+                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+            } else {
+                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+            }
+        }
+
+        if (props.authorsArray === "John Oliver") {
+            if (handle_String == '') {
+                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+            } else {
+                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+            }
+        }
+
+        if (props.authorsArray === "Ben Shapiro") {
+            if (handle_String == '') {
+                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+            } else {
+                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+            }
+        }
+
+        return handle_String + ') AND'
     }
 
     function updateTweets() {
