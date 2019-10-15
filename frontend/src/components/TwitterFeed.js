@@ -31,13 +31,14 @@ export default function TwitterFeed(props) {
         //check which influencers selected
         // set string equal to twitter handle
         // return from:handle AND query params
-
-        var authorHandle = selectAuthor(props);
         var authorName = props.authorsArray;
-        if (props.subject === 'Guns'){
-            return '(from:' + twitterHandles.get(authorName) + ')' //'(guns OR 'second amendment' OR shootings)'
+        var authorHandle = selectAuthor(props);
+        if(props.subject === 'Any' || !Object.keys(props.subject).length) {
+            return authorHandle
+        } else if (props.subject === 'Guns'){
+            return authorHandle + `(gun OR 'second amendment' OR shootings)`
         } else if (props.subject === 'Environment'){
-            return authorHandle + ` (#climate OR Environment OR climate change OR pollution)`
+            return authorHandle + ` (#climate OR Environment OR "climate change" OR pollution)`
         } else if (props.subject === 'Sexual Harassment'){
             return authorHandle + " sexual harassment OR rape"
         } else if (props.subject === 'Healthcare'){
@@ -45,7 +46,7 @@ export default function TwitterFeed(props) {
         } else if (props.subject === 'Student Debt'){
             return authorHandle + ' #studentloan OR student debt'
         } else if (props.subject === '2020 Election'){
-            return authorHandle + ' #election2020 OR MAGA OR #Yang2020 OR Vote OR KeepItBlue OR #Bernie2020 OR #Warren2020 OR #Pete2020'
+            return authorHandle + '#election2020 OR MAGA OR #Yang2020 OR Vote OR KeepItBlue OR #Bernie2020 OR #Warren2020 OR #Pete2020'
         } else if (props.subject === 'Police Brutality'){
             return authorHandle + ' #blacklivesmatter OR #bluelivesmatter OR Ferguson'
         } else if (props.subject === 'LGBTQ+') {
@@ -62,94 +63,93 @@ export default function TwitterFeed(props) {
     //if string is empty, add handle
     //if stirng is not empty, concatenate with OR from:handle
         var handle_String = '';
-        if (props.authorsArray === 'Barack Obama') {
+        if (props.authorsArray.indexOf('Barack Obama') >= 0) {
             if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+                handle_String += '(from:' + twitterHandles.get('Barack Obama');
             } else {
-                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+                handle_String += ' OR from:' + twitterHandles.get('Barack Obama');
             }
         }
         
-        if (props.authorsArray === 'Donald Trump') {
+        if (props.authorsArray.indexOf('Donald Trump') >= 0) {
             if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+                handle_String += '(from:' + twitterHandles.get('Donald Trump');
             } else {
-                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+                handle_String += ' OR from:' + twitterHandles.get('Donald Trump');
             }
         }
 
-        if (props.authorsArray === "Alexandria Ocasio-Cortez") {
+        if (props.authorsArray.indexOf('Alexandria Ocasio-Cortez') >= 0) {
             if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+                handle_String += '(from:' + twitterHandles.get('Alexandria Ocasio-Cortez');
             } else {
-                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+                handle_String += ' OR from:' + twitterHandles.get('Alexandria Ocasio-Cortez');
             }
         }
 
-        if (props.authorsArray === "Ted Cruz") {
+        if (props.authorsArray.indexOf('Ted Cruz') >= 0) {
             if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+                handle_String += '(from:' + twitterHandles.get('Ted Cruz');
             } else {
-                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+                handle_String += ' OR from:' + twitterHandles.get('Ted Cruz');
             }
         }
 
-        if (props.authorsArray === "Nancy Pelosi") {
+        if (props.authorsArray.indexOf('Nancy Pelosi') >= 0) {
             if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+                handle_String += '(from:' + twitterHandles.get('Nancy Pelosi');
             } else {
-                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+                handle_String += ' OR from:' + twitterHandles.get('Nancy Pelosi');
             }
         }
        
-        if (props.authorsArray === "Adam Schiff") {
+        if (props.authorsArray.indexOf('Adam Schiff') >= 0) {
             if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+                handle_String += '(from:' + twitterHandles.get('Adam Schiff');
             } else {
-                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+                handle_String += ' OR from:' + twitterHandles.get('Adam Schiff');
             }
         }
 
-        if (props.authorsArray === "John Lewis") {
+        if (props.authorsArray.indexOf('John Lewis') >= 0) {
             if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+                handle_String += '(from:' + twitterHandles.get('John Lewis');
             } else {
-                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+                handle_String += ' OR from:' + twitterHandles.get('John Lewis');
             }
         }
 
-        if (props.authorsArray === "Anderson Cooper") {
+        if (props.authorsArray.indexOf('Anderson Cooper') >= 0) {
             if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+                handle_String += '(from:' + twitterHandles.get('Anderson Cooper');
             } else {
-                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+                handle_String += ' OR from:' + twitterHandles.get('Anderson Cooper');
             }
         }
 
-        if (props.authorsArray === "John Oliver") {
+        if (props.authorsArray.indexOf('John Oliver') >= 0) {
             if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+                handle_String += '(from:' + twitterHandles.get('John Oliver');
             } else {
-                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+                handle_String += ' OR from:' + twitterHandles.get('John Oliver');
             }
         }
 
-        if (props.authorsArray === "Ben Shapiro") {
+        if (props.authorsArray.indexOf('Ben Shapiro') >= 0) {
             if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get(props.authorsArray);
+                handle_String += '(from:' + twitterHandles.get('Ben Shapiro');
             } else {
-                handle_String += ' OR from:' + twitterHandles.get(props.authorsArray);
+                handle_String += ' OR from:' + twitterHandles.get('Ben Shapiro');
             }
         }
-
-        return handle_String + ') AND'
+        return handle_String === '' ? handle_String : handle_String + ') AND '
     }
 
     function updateTweets() {
+        console.log(getCriteria())
         axios.post('http://localhost:4000/getTweets', {criteria: getCriteria()})
             .then(response => response.data)
             .then(data => {
-                console.log(data);
                 var newTweets = data.statuses.map((item) => {
                     return ({    
                         alt: 'fakeAlt',
@@ -210,13 +210,6 @@ export default function TwitterFeed(props) {
                         </div>
                     )
                 })}
-                <Button
-                    color="primary"
-                    variant="contained"
-                    className={classes.button}
-                >
-                    Get more tweets
-                </Button>
             </List>
         </Paper>
     );

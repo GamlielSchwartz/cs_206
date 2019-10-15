@@ -54,11 +54,10 @@ app.post('/getTweets', function(req, res) {
     //     res.status(200).send(tweets);
     //   }
     // });
-    console.log(req.body.criteria)
+    //console.log("criteria: " + req.body.criteria)
     //filter by authors: from:POTUS OR from:ClaraJeffery
     client.get('search/tweets', {q: `${req.body.criteria} -filter:retweets`, tweet_mode: 'extended', count: 100, result_type: 'mixed', language: 'en'}, function(error, tweets, response) {
-    res.status(200).send(tweets);
-    console.log(tweets);
+    res.status(200).send(tweets)
 });
 });
 
