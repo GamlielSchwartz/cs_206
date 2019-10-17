@@ -27,27 +27,28 @@ const twitterHandles = new Map([['Barack Obama', 'barackobama'], ['Donald Trump'
 export default function TwitterFeed(props) {
     console.log(props)
 
-    function getCriteria(){
+    function getCriteria() {
         //check which influencers selected
         // set string equal to twitter handle
         // return from:handle AND query params
-        var authorName = props.authorsArray;
         var authorHandle = selectAuthor(props);
-        if(props.subject === 'Any' || !Object.keys(props.subject).length) {
+        if (props.subject === 'Any'){
+            return '';
+        } if(!Object.keys(props.subject).length) {
             return authorHandle
-        } else if (props.subject === 'Guns'){
+        } else if (props.subject === 'Guns') {
             return authorHandle + `(gun OR 'second amendment' OR shootings)`
-        } else if (props.subject === 'Environment'){
+        } else if (props.subject === 'Environment') {
             return authorHandle + ` (#climate OR Environment OR "climate change" OR pollution)`
-        } else if (props.subject === 'Sexual Harassment'){
+        } else if (props.subject === 'Sexual Harassment') {
             return authorHandle + " sexual harassment OR rape"
-        } else if (props.subject === 'Healthcare'){
+        } else if (props.subject === 'Healthcare') {
             return authorHandle + ' healthcare OR hospital OR medical treatments'
-        } else if (props.subject === 'Student Debt'){
+        } else if (props.subject === 'Student Debt') {
             return authorHandle + ' #studentloan OR student debt'
-        } else if (props.subject === '2020 Election'){
+        } else if (props.subject === '2020 Election') {
             return authorHandle + '#election2020 OR MAGA OR #Yang2020 OR Vote OR KeepItBlue OR #Bernie2020 OR #Warren2020 OR #Pete2020'
-        } else if (props.subject === 'Police Brutality'){
+        } else if (props.subject === 'Police Brutality') {
             return authorHandle + ' #blacklivesmatter OR #bluelivesmatter OR Ferguson'
         } else if (props.subject === 'LGBTQ+') {
             return authorHandle + ' #lgbt OR #pride OR #transgender'
@@ -55,103 +56,34 @@ export default function TwitterFeed(props) {
             return authorHandle + ' #feminism OR #gender OR #genderequality'
         } else if (props.subject === 'Brexit') {
             return authorHandle + ' #brexit'
-        }
+        } else return '';
     }
 
     function selectAuthor(props) {
 
-    //if string is empty, add handle
-    //if stirng is not empty, concatenate with OR from:handle
+        //if string is empty, add handle
+        //if string is not empty, concatenate with OR from:handle
         var handle_String = '';
-        if (props.authorsArray.indexOf('Barack Obama') >= 0) {
-            if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get('Barack Obama');
-            } else {
-                handle_String += ' OR from:' + twitterHandles.get('Barack Obama');
+        twitterHandles.forEach(function (value, key) {
+            if (props.authorsArray.indexOf(key) >= 0) {
+                if (handle_String == '') {
+                    handle_String += '(from:' + value;
+                } else {
+                    handle_String += ' OR from:' + value;
+                }
             }
-        }
-        
-        if (props.authorsArray.indexOf('Donald Trump') >= 0) {
-            if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get('Donald Trump');
-            } else {
-                handle_String += ' OR from:' + twitterHandles.get('Donald Trump');
-            }
-        }
-
-        if (props.authorsArray.indexOf('Alexandria Ocasio-Cortez') >= 0) {
-            if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get('Alexandria Ocasio-Cortez');
-            } else {
-                handle_String += ' OR from:' + twitterHandles.get('Alexandria Ocasio-Cortez');
-            }
-        }
-
-        if (props.authorsArray.indexOf('Ted Cruz') >= 0) {
-            if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get('Ted Cruz');
-            } else {
-                handle_String += ' OR from:' + twitterHandles.get('Ted Cruz');
-            }
-        }
-
-        if (props.authorsArray.indexOf('Nancy Pelosi') >= 0) {
-            if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get('Nancy Pelosi');
-            } else {
-                handle_String += ' OR from:' + twitterHandles.get('Nancy Pelosi');
-            }
-        }
-       
-        if (props.authorsArray.indexOf('Adam Schiff') >= 0) {
-            if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get('Adam Schiff');
-            } else {
-                handle_String += ' OR from:' + twitterHandles.get('Adam Schiff');
-            }
-        }
-
-        if (props.authorsArray.indexOf('John Lewis') >= 0) {
-            if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get('John Lewis');
-            } else {
-                handle_String += ' OR from:' + twitterHandles.get('John Lewis');
-            }
-        }
-
-        if (props.authorsArray.indexOf('Anderson Cooper') >= 0) {
-            if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get('Anderson Cooper');
-            } else {
-                handle_String += ' OR from:' + twitterHandles.get('Anderson Cooper');
-            }
-        }
-
-        if (props.authorsArray.indexOf('John Oliver') >= 0) {
-            if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get('John Oliver');
-            } else {
-                handle_String += ' OR from:' + twitterHandles.get('John Oliver');
-            }
-        }
-
-        if (props.authorsArray.indexOf('Ben Shapiro') >= 0) {
-            if (handle_String == '') {
-                handle_String += '(from:' + twitterHandles.get('Ben Shapiro');
-            } else {
-                handle_String += ' OR from:' + twitterHandles.get('Ben Shapiro');
-            }
-        }
+        })
         return handle_String === '' ? handle_String : handle_String + ') AND '
     }
 
     function updateTweets() {
         console.log(getCriteria())
-        axios.post('http://localhost:4000/getTweets', {criteria: getCriteria()})
+        axios.post('http://localhost:4000/getTweets', { criteria: getCriteria() })
             .then(response => response.data)
             .then(data => {
+                console.log(data);
                 var newTweets = data.statuses.map((item) => {
-                    return ({    
+                    return ({
                         alt: 'fakeAlt',
                         src: item.user.profile_image_url_https,
                         handle: item.user.screen_name,
@@ -160,7 +92,7 @@ export default function TwitterFeed(props) {
                         retweetCount: item.retweet_count,
                     })
                 })
-                setTweets(newTweets)
+                setTweets(newTweets.sort((item1, item2) => item2.retweetCount - item1.retweetCount))
             });
     }
 
