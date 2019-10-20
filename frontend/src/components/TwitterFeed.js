@@ -32,11 +32,9 @@ export default function TwitterFeed(props) {
         // set string equal to twitter handle
         // return from:handle AND query params
         var authorHandle = selectAuthor(props);
-        if (props.subject === 'Any'){
-            return '';
-        } if(!Object.keys(props.subject).length) {
+        if(props.subject === 'Any' || !Object.keys(props.subject).length) {
             return authorHandle
-        } else if (props.subject === 'Guns') {
+        } else if (props.subject === 'Guns'){
             return authorHandle + `(gun OR 'second amendment' OR shootings)`
         } else if (props.subject === 'Environment') {
             return authorHandle + ` (#climate OR Environment OR "climate change" OR pollution)`
