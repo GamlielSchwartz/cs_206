@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { ListSubheader } from '@material-ui/core';
+import { ListSubheader, Paper } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,7 +23,8 @@ export default function SelectedListItem(props) {
     }
 
     return (
-        <div className={classes.root}>
+        <Paper style={{ maxHeight: window.innerHeight * .9, overflow: 'auto' }}>           
+
             <List 
             component="nav" 
             aria-label="secondary mailbox folder"
@@ -46,6 +47,6 @@ export default function SelectedListItem(props) {
                     )
                 })}
             </List>
-        </div>
+        </Paper>
     );
 }
