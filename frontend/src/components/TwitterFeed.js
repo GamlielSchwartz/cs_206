@@ -33,9 +33,9 @@ export default function TwitterFeed(props) {
         // return from:handle AND query params
 
         var authorHandle = selectAuthor(props);
-        if(props.subject === 'Any' || !Object.keys(props.subject).length) {
+        if (props.subject === 'Any' || !Object.keys(props.subject).length) {
             return authorHandle
-        } else if (props.subject === 'Gun Control'){
+        } else if (props.subject === 'Gun Control') {
             return authorHandle + 'second amendment OR school shooting OR march for our lives OR firearms OR NRA'
         } else if (props.subject === 'Environment') {
             return authorHandle + 'carbon emissions OR alternative energy OR pollution OR global warming OR forest fire OR renewable OR global warming OR greta thunberg OR carbon tax OR green new deal'
@@ -92,11 +92,11 @@ export default function TwitterFeed(props) {
         props.authorsArray.forEach(function (value, key) {
             console.log(value);
             // if (props.authorsArray.indexOf(key) >= 0) {
-                if (handle_String == '') {
-                    handle_String += '(from:' + value.twitterHandle;
-                } else {
-                    handle_String += ' OR from:' + value.twitterHandle;
-                }
+            if (handle_String == '') {
+                handle_String += '(from:' + value.twitterHandle;
+            } else {
+                handle_String += ' OR from:' + value.twitterHandle;
+            }
             // }
         })
         return handle_String === '' ? handle_String : handle_String + ') AND '
@@ -126,18 +126,17 @@ export default function TwitterFeed(props) {
     const [tweets, setTweets] = useState([]);
     return (
         <Paper style={{ maxHeight: window.innerHeight * .9, overflow: 'auto' }}>
-            <Button
-                color="primary"
-                variant="contained"
-                onClick={updateTweets}>
-                get tweets
-            </Button>
             <List
                 className={classes.root}
                 subheader={
                     <ListSubheader component="div" id="nested-list-subheader">
-                        Twitter Feed:
-            </ListSubheader>}
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={updateTweets}>
+                            Get Tweets
+                        </Button>
+                    </ListSubheader>}
             >
                 {tweets.filter(item => item.retweetCount > 3).map((item, index) => {
                     return (

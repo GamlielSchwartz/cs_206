@@ -8,38 +8,55 @@ import './home.css';
 function Home() {
     const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [chosenAuthors, setChosenAuthors] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+
     // function updateAuthors(newAuthors) {
     //     console.log(newAuthors);
     //     setSelectedAuthors(newAuthors);
     // }
 
-    function addAuthor(authorObj){
+    function updateCategories(newCategories) {
+        console.log(newCategories);
+        setSelectedCategories(newCategories);
+    }
+
+    function addAuthor(authorObj) {
         console.log(authorObj);
         var newAuthors = [...chosenAuthors];
         newAuthors.push(authorObj);
         setChosenAuthors(newAuthors);
     }
-    function bulkAdd(bulkAuthorArray){
+
+    function bulkAdd(bulkAuthorArray) {
         var newAuthors = [...chosenAuthors];
-        for (var i = 0; i < bulkAuthorArray.length; i++){
-            if (!newAuthors.includes(bulkAuthorArray[i])){
+        for (var i = 0; i < bulkAuthorArray.length; i++) {
+            if (!newAuthors.includes(bulkAuthorArray[i])) {
                 newAuthors.push(bulkAuthorArray[i]);
             }
         }
         //TODO: not working!
-        const sorted = newAuthors.sort(function(a,b) {return  b.name - a.name; });
+        const sorted = newAuthors.sort(function (a, b) { return b.name - a.name; });
         // console.log(sorted)
         setChosenAuthors(sorted);
     }
 
-    function removeAuthor(authorObj){
+    function bulkRemove(toRemoveArray) {
+        var newAuthors = [...chosenAuthors];
+        for (var i = 0; i < toRemoveArray.length; i++) {
+            newAuthors = newAuthors.filter(item=> item !== toRemoveArray[i]);
+        }
+        setChosenAuthors(newAuthors);
+    }
+
+    function removeAuthor(authorObj) {
         var newAuthors = [...chosenAuthors];
         newAuthors.splice(newAuthors.indexOf(authorObj), 1);
         setChosenAuthors(newAuthors);
     }
 
-    function clearAll(){
+    function clearAll() {
         setChosenAuthors([]);
+        setSelectedCategories([]);
     }
 
     function updateSubjects(newSubjects) {
@@ -48,9 +65,9 @@ function Home() {
     }
 
     //TODO: replace dummy with real data
-    const subjectArray = ['Gun Control','Environment','Sexual Violence','Healthcare','Student Debt','2020 Election','Police Brutality','LGBTQ+',
-    'Gender Equality','Immigration','Refugees','Big Tech','Marijuana','Abortion','Free Speech','Impeachment',
-    'China','Taxes', 'Minimum Wage', 'Religion', 'Terrorism', 'Education', 'Opioid Crisis']
+    const subjectArray = ['Gun Control', 'Environment', 'Sexual Violence', 'Healthcare', 'Student Debt', '2020 Election', 'Police Brutality', 'LGBTQ+',
+        'Gender Equality', 'Immigration', 'Refugees', 'Big Tech', 'Marijuana', 'Abortion', 'Free Speech', 'Impeachment',
+        'China', 'Taxes', 'Minimum Wage', 'Religion', 'Terrorism', 'Education', 'Opioid Crisis']
     // const authorsArray = ["Barack Obama", "Donald Trump", "Alexandria Ocasio-Cortez", "Ted Cruz", "Nancy Pelosi", "Adam Schiff", "John Lewis", "Anderson Cooper", "John Oliver", "Ben Shapiro"];
     const authorsArray = [];
     return (
@@ -64,8 +81,11 @@ function Home() {
             </Grid>
             <Grid item xs={3}>
                 <FilterByAuthor
+                    bulkRemove={bulkRemove}
                     clearAll={clearAll}
                     bulkAdd={bulkAdd}
+                    selectedCategories={selectedCategories}
+                    setSelectedCategories={setSelectedCategories}
                     // setSelectedAuthors={updateAuthors}
                     authorsArray={authorsArray}
                     addAuthor={addAuthor}

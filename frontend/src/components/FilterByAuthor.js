@@ -26,25 +26,27 @@ export default function FilterByAuthor(props) {
     const classes = useStyles();
     // const [checked, setChecked] = useState([0,0,0,0,0]);
     // const setChecked = props.setSelectedAuthors;
-    const [checked, setChecked] = useState({ 'Journalist': false, 'Academia': true, 'Politician—Executive': false, 'Politician—Representative': false, 'Politician—Senator': false })
+    // const [checked, setChecked] = useState({ 'Journalist': false, 'Academia': true, 'Politician—Executive': false, 'Politician—Representative': false, 'Politician—Senator': false })
+    const checked = props.selectedCategories;
+    const setChecked = props.setSelectedCategories;
+
 
     const handleToggle = value => () => {
-        console.log(value)
-        // var newChecked = [JSON.parse(JSON.stringify(checked))];
-        // newChecked[value] = !newChecked[value];
-        // setChecked(newChecked);
-        // console.log(newChecked)
-        var filtered = influencers.filter(item => item.category === value);
-        props.bulkAdd(filtered);
-        // const currentIndex = checked.indexOf(value);
-        // const newChecked = [...checked];
+        const currentIndex = checked.indexOf(value);
+        const newChecked = [...checked];
 
-        // if (currentIndex === -1) {
-        //     newChecked.push(value);
-        // } else {
-        //     newChecked.splice(currentIndex, 1);
-        // }
-        // setChecked(newChecked);
+        if (currentIndex === -1) {
+            console.log('check')
+            var filtered = influencers.filter(item => item.category === value);
+            props.bulkAdd(filtered);
+            newChecked.push(value);
+        } else {
+            console.log('uncheck')
+            var toRemoveArray = influencers.filter(item => item.category === value);
+            props.bulkRemove(toRemoveArray);
+            newChecked.splice(currentIndex, 1);
+        }
+        setChecked(newChecked);
     };
 
     function handleSelectedAuthor(event, obj) {
@@ -76,7 +78,7 @@ export default function FilterByAuthor(props) {
                                 <Checkbox
                                     edge="end"
                                     onChange={handleToggle(value)}
-                                    // checked={checked[value]}
+                                    checked={checked.indexOf(value) !== -1}
                                     inputProps={{ 'aria-labelledby': "labelId" }}
                                 />
                             </ListItemSecondaryAction>
