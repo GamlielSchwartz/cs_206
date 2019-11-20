@@ -6,9 +6,16 @@ import TwitterFeed from './TwitterFeed';
 import './home.css';
 
 function Home() {
+    const UnitedStatesSubjectArray = ['Gun Control', 'Environment', 'Sexual Violence', 'Healthcare', 'Student Debt', '2020 Election', 'Police Brutality', 'LGBTQ+',
+        'Gender Equality', 'Immigration', 'Refugees', 'Big Tech', 'Marijuana', 'Abortion', 'Free Speech', 'Impeachment',
+        'China', 'Taxes', 'Minimum Wage', 'Religion', 'Terrorism', 'Education', 'Opioid Crisis']
+    const californiaSubjectArray = ['California Subject 1', 'Subject 2', 'Subject 3'];
+    const newYorkSubjectArray = ['New York Subject 1', 'Subject 2', 'Subject 3'];
+
     const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [chosenAuthors, setChosenAuthors] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [currDisplayedSubjects, setCurrDisplayedSubjects] = useState(UnitedStatesSubjectArray);
 
     // function updateAuthors(newAuthors) {
     //     console.log(newAuthors);
@@ -43,7 +50,7 @@ function Home() {
     function bulkRemove(toRemoveArray) {
         var newAuthors = [...chosenAuthors];
         for (var i = 0; i < toRemoveArray.length; i++) {
-            newAuthors = newAuthors.filter(item=> item !== toRemoveArray[i]);
+            newAuthors = newAuthors.filter(item => item !== toRemoveArray[i]);
         }
         setChosenAuthors(newAuthors);
     }
@@ -64,19 +71,38 @@ function Home() {
         setSelectedSubjects(newSubjects);
     }
 
-    //TODO: replace dummy with real data
-    const subjectArray = ['Gun Control', 'Environment', 'Sexual Violence', 'Healthcare', 'Student Debt', '2020 Election', 'Police Brutality', 'LGBTQ+',
-        'Gender Equality', 'Immigration', 'Refugees', 'Big Tech', 'Marijuana', 'Abortion', 'Free Speech', 'Impeachment',
-        'China', 'Taxes', 'Minimum Wage', 'Religion', 'Terrorism', 'Education', 'Opioid Crisis']
+    var authorCategories = ['Journalist', 'Academia', 'Politician—Executive', 'Politician—Representative', 'Politician—Senator'];
+
+
+    function switchSubjectAndAuthorsByRegion(newRegion) {
+        console.log(newRegion);
+        switch (newRegion) {
+            case 'United States':
+                setCurrDisplayedSubjects(UnitedStatesSubjectArray);
+                setAuthCategories(authorCategories)
+                break;
+            case 'California':
+                setCurrDisplayedSubjects(californiaSubjectArray);
+                setAuthCategories(['first', 'second', 'third'])
+                break;
+            case 'New York':
+                setCurrDisplayedSubjects(newYorkSubjectArray);
+                break;
+        }
+    }
+
+    const [authCategories, setAuthCategories] = React.useState(authorCategories);
+
     // const authorsArray = ["Barack Obama", "Donald Trump", "Alexandria Ocasio-Cortez", "Ted Cruz", "Nancy Pelosi", "Adam Schiff", "John Lewis", "Anderson Cooper", "John Oliver", "Ben Shapiro"];
-    const authorsArray = [];
+    // const authorsArray = [];
     return (
         <Grid container spacing={3}>
             <Grid item xs={3}>
                 <FilterBySubject
                     setSelectedSubjects={updateSubjects}
                     selectedSubjects={selectedSubjects}
-                    subjectArray={subjectArray.sort()}
+                    subjectArray={currDisplayedSubjects.sort()}
+                    changeRegion={switchSubjectAndAuthorsByRegion}
                 />
             </Grid>
             <Grid item xs={3}>
@@ -87,7 +113,8 @@ function Home() {
                     selectedCategories={selectedCategories}
                     setSelectedCategories={setSelectedCategories}
                     // setSelectedAuthors={updateAuthors}
-                    authorsArray={authorsArray}
+                    // authorsArray={authorsArray}
+                    categories={authCategories}
                     addAuthor={addAuthor}
                     chosenAuthors={chosenAuthors}
                     removeAuthor={removeAuthor}
@@ -96,7 +123,7 @@ function Home() {
 
             <Grid item xs={6}>
                 <TwitterFeed
-                    authorsArray={chosenAuthors}
+                    // authorsArray={chosenAuthors}
                     subject={selectedSubjects} />
             </Grid>
 

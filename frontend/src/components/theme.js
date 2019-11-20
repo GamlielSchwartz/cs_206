@@ -3,17 +3,18 @@ export default {
       position: 'relative'
     },
     input: {
-      width: 240,
+      width: '85%',
       height: 30,
       padding: '10px 20px',
       fontFamily: 'Helvetica, sans-serif',
       fontWeight: 300,
       fontSize: 16,
       border: '1px solid #aaa',
-      borderTopLeftRadius: 4,
-      borderTopRightRadius: 4,
-      borderBottomLeftRadius: 4,
-      borderBottomRightRadius: 4,
+      // borderTopLeftRadius: 4,
+      // borderTopRightRadius: 4,
+      // borderBottomLeftRadius: 4,
+      // borderBottomRightRadius: 4,
+      borderRadius: 4
     },
     inputFocused: {
       outline: 'none'

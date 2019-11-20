@@ -54,7 +54,7 @@ export default function FilterByAuthor(props) {
         props.addAuthor(obj.suggestion);
     }
 
-    const categories = ['Journalist', 'Academia', 'Politician—Executive', 'Politician—Representative', 'Politician—Senator'];
+    // const categories = ['Journalist', 'Academia', 'Politician—Executive', 'Politician—Representative', 'Politician—Senator'];
 
     return (
         <Paper style={{ maxHeight: window.innerHeight * .9, overflow: 'auto' }}>
@@ -64,13 +64,15 @@ export default function FilterByAuthor(props) {
             <List
                 dense
                 className={classes.root}
+                component="nav" 
+                aria-label="secondary mailbox folder"
                 subheader={
                     <ListSubheader component="div" id="nested-list-subheader">
                         Selected Influencers:
                     </ListSubheader>
                 }
             >
-                {categories.map((value, index) => {
+                {props.categories.map((value, index) => {
                     return (
                         <ListItem key={index}>
                             <ListItemText id={"labelId"} primary={value} />
