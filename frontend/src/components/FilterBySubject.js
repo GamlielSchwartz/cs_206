@@ -76,7 +76,7 @@ export default function SelectedListItem(props) {
                     >
                         <MenuItem value={"United States"}>United States</MenuItem>
                         <MenuItem value={"California"}>California</MenuItem>
-                        <MenuItem value={"New York"}>New York</MenuItem>
+                        <MenuItem value={"New York City"}>New York City</MenuItem>
                     </Select>
                     <FormHelperText>Select a Region to Explore</FormHelperText>
                 </FormControl>

@@ -30,7 +30,7 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            Your Twitter News Dashboard
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>

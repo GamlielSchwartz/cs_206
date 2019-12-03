@@ -28,7 +28,7 @@ export default function TwitterFeed(props) {
     console.log(props)
 
     function getCriteria() {
-        //check which influencers selected
+        // check which influencers selected
         // set string equal to twitter handle
         // return from:handle AND query params
 
@@ -84,6 +84,12 @@ export default function TwitterFeed(props) {
         } else return '';
     }
 
+    function getCriteria2(){
+        console.log(props.authorsArray);
+        console.log(props.subject);
+        return {subject: props.subject, authors:props.authorsArray}
+    }
+
     function selectAuthor(props) {
 
         //if string is empty, add handle
@@ -103,29 +109,32 @@ export default function TwitterFeed(props) {
     }
 
     function updateTweets() {
-        console.log(getCriteria())
-        axios.post('http://localhost:4000/getTweets', { criteria: getCriteria() })
+        // console.log(getCriteria())
+        props.setProgress(true);
+        axios.post('http://localhost:4000/getTweetsFromDB', { criteria: getCriteria2() })
             .then(response => response.data)
             .then(data => {
                 console.log(data);
-                var newTweets = data.statuses.map((item) => {
+                var newTweets = data.tweets.map((item) => {
                     return ({
-                        alt: 'fakeAlt',
-                        src: item.user.profile_image_url_https,
-                        handle: item.user.screen_name,
-                        header: item.user.screen_name,
-                        primaryText: item.full_text,
-                        retweetCount: item.retweet_count,
+                        alt: 'N/A',
+                        src: "???",
+                        handle: item.twitterHandle,
+                        header: item.twitterHandle,
+                        primaryText: item.content,
+                        retweetCount: item.retweets,
                     })
                 })
-                setTweets(newTweets.sort((item1, item2) => item2.retweetCount - item1.retweetCount))
+                setTweets(newTweets.sort((item1, item2) => item2.retweetCount - item1.retweetCount));
+                props.setProgress(false);
+                props.notifyHistogram(data);
             });
     }
 
     const classes = useStyles();
     const [tweets, setTweets] = useState([]);
     return (
-        <Paper style={{ maxHeight: window.innerHeight * .9, overflow: 'auto' }}>
+        <Paper style={{ maxHeight: window.innerHeight * .5, overflow: 'auto' }}>
             <List
                 className={classes.root}
                 subheader={
@@ -138,13 +147,13 @@ export default function TwitterFeed(props) {
                         </Button>
                     </ListSubheader>}
             >
-                {tweets.filter(item => item.retweetCount > 3).map((item, index) => {
+                {tweets.filter(item => item.retweetCount >= 3).slice(0,200).map((item, index) => {
                     return (
                         <div key={index}>
                             <ListItem alignItems="center">
-                                <ListItemAvatar>
+                                {/* <ListItemAvatar>
                                     <Avatar alt={item.alt} src={item.src} />
-                                </ListItemAvatar>
+                                </ListItemAvatar> */}
                                 <ListItemText
                                     primary={'@' + item.header}
                                     secondary={
